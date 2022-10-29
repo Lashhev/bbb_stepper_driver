@@ -6,7 +6,7 @@ option(BUILD_STEPPER_DRIVER_LIB_EXAMPLES "Build examples" ON)
 
 add_subdirectory(bbb_gpio)
 
-add_library(${PROJECT_NAME} STATIC src/stepper_driver_uln2003.cpp src/stepper_driver_tb6600.cpp)
+add_library(${PROJECT_NAME} STATIC src/stepper_driver_uln2003.cpp src/stepper_driver_tb6600.cpp src/stepper_driver.cpp src/gpio/gpio_manager.cpp)
 target_link_libraries(${PROJECT_NAME} bbb_gpio)
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
