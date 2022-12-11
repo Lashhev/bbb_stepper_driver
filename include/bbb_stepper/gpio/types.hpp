@@ -30,6 +30,10 @@ struct GPIOPin {
     return ((GPIOPin::pin == gpio.pin) && (GPIOPin::port == gpio.port)) ? false
                                                                         : true;
   }
+  std::string to_string() {
+    return std::string("P") + std::to_string(port) + std::string(".") +
+           std::to_string(pin);
+  }
   char port;
   char pin;
 };
