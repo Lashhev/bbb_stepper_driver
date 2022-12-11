@@ -4,13 +4,28 @@
 namespace beaglebone {
 namespace motor_driver {
 
+/**
+ * @brief A Software stepper Driver to control hardware stepper driver TB6600
+ *
+ */
 class StepperDriverTB6600 : public StepperDriver {
 private:
-  /* data */
+  // motor pin numbers:
+  beaglebone::gpio::GPIOPin motor_pins[3];
+  bool m_inverse_dir; // reverse direction
 public:
+  /**
+   * @brief Constructor
+   *
+   * @param dir_pin direction pin
+   * @param pulse_pin pulse pin
+   * @param enable_pin enable pin
+   * @param inverse_dir reverse direction
+   */
   StepperDriverTB6600(
       beaglebone::gpio::GPIOPin dir_pin, beaglebone::gpio::GPIOPin pulse_pin,
-      beaglebone::gpio::GPIOPin enable_pin = beaglebone::gpio::GPIOPin());
+      beaglebone::gpio::GPIOPin enable_pin = beaglebone::gpio::GPIOPin(),
+      bool inverse_dir = false);
   ~StepperDriverTB6600();
   void setSpeed(float speed) override;
 
@@ -27,8 +42,6 @@ protected:
   /// mode. Called automatically by the constructor.
   void enableOutputs() override;
   void step(uint8_t step) override;
-  // motor pin numbers:
-  beaglebone::gpio::GPIOPin motor_pins[3];
 };
 } // namespace motor_driver
 } // namespace beaglebone

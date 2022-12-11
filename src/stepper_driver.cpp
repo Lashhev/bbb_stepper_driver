@@ -152,3 +152,11 @@ bool StepperDriver::runToNewPosition(long position) {
 }
 
 StepperDriver::~StepperDriver() {}
+// Blocks until the new target position is reached
+bool StepperDriver::runSpeedToNewPosition(long position) {
+  IS_INIT()
+  moveTo(position);
+  runSpeedToPosition();
+  return true;
+}
+

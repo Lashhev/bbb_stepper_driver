@@ -34,7 +34,7 @@ public:
   /// position. Dont use this in event loops, since it blocks.
   /// \param[in] position The new target position.
   bool runToNewPosition(long position);
-
+bool runSpeedToNewPosition(long position);
   /// Sets the maximum permitted speed. the run() function will accelerate
   /// up to the speed set by this function.
   /// \param[in] speed The desired maximum speed in steps per second. Must
