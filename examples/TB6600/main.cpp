@@ -20,7 +20,7 @@ using namespace boost::program_options;
 const int MAX_SPEED = 600;
 
 //  Acceleration
-const int ACCEL = 600;
+const int ACCEL = 300;
 
 //  Target position
 const int TARGET_POS = 2000;
@@ -81,14 +81,17 @@ bool StepperDriverArgs::process(int argc, char *argv[]) {
   options_description desc("TB6600 Stepper driver options");
   desc.add_options()("help,h", "Show help")(
       "ena_pin", value<std::string>(&ena_pin),
-      "Enable pin of TB6600 Stepper driver. Example 'P8.8'")(
+      "Enable pin of TB6600 Stepper driver. Default: 'P8.8'")(
       "dir_pin", value<std::string>(&dir_pin),
-      "Direction pin of TB6600 Stepper driver. Example 'P8.10'")(
+      "Direction pin of TB6600 Stepper driver. Default: 'P8.10'")(
       "pul_pin", value<std::string>(&pul_pin),
-      "Pulse pin of TB6600 Stepper driver. Example 'P8.12'")(
-      "max_speed", value<int>(&max_speed), "Max stepper motor speed.")(
-      "accel", value<int>(&accel), "Stepper motor acceleration.")(
-      "target_pos", value<int>(&position), "Stepper motor target position.");
+      "Pulse pin of TB6600 Stepper driver. Default: 'P8.12'")(
+      "max_speed", value<int>(&max_speed),
+      "Max stepper motor speed in steps. Default: 600")(
+      "accel", value<int>(&accel),
+      "Stepper motor acceleration in steps. Default: 300")(
+      "target_pos", value<int>(&position),
+      "Stepper motor target position in steps. Default: 2000");
 
   parsed_options parsed = command_line_parser(argc, argv).options(desc).run();
   store(parsed, vm);
@@ -154,6 +157,7 @@ int main(int argc, char *argv[]) {
   // Slow - 4-step CW sequence to observe lights on driver board
   printf("Slow \n");
   stepper.init();
+  stepper.setCurrentPosition(0);
   stepper.setMaxSpeed(speed);
   stepper.setAcceleration(accel);
   stepper.runToNewPosition(position);
