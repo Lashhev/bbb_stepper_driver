@@ -171,10 +171,11 @@ int iolib_init(void)
  */
 int iolib_free(void)
 {
+	int status;
 	if (memh!=0) {
-		close(memh);
+		status = close(memh);
 	}
-	return 0;
+	return status;
 }
 /*-----------------------------------------------------------------------------------------------
  * ********************************

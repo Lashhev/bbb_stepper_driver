@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <exception>
 #include <iostream>
 #define TIME_IT(process)                                                       \
   do {                                                                         \
@@ -13,6 +14,20 @@
 
 namespace beaglebone {
 namespace gpio {
+/**
+ * @brief GPIO Initialization Exception
+ *
+ */
+struct GPIOInitException : public std::exception {
+  const char *what() const throw() {
+    return "[ERROR] Failed to initialize iolib. Maybe iolib is already "
+           "initialized or your hardware "
+           "doesn't support it\n";
+  }
+};
+struct GPIOFreeException : public std::exception {
+  const char *what() const throw() { return "[ERROR] Failed to free iolib.\n"; }
+};
 /**
  * @brief Possible GPIO pin values
  *
